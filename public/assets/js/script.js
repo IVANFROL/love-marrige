@@ -52,10 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Wish page background auto-change logic
   const wishPageImages = [
     'assets/images/photos/2025-07-21 17.36.08.jpg',
-    'assets/images/photos/2025-07-21 17.36.22.jpg',
-    'assets/images/photos/2025-07-21 17.36.27.jpg',
     'assets/images/photos/2025-07-21 17.36.33.jpg',
-    'assets/images/photos/2025-07-21 17.36.38.jpg',
     'assets/images/photos/2025-07-21 17.36.43.jpg',
   ];
   const wishesPage = document.querySelector('.wishes-page');
