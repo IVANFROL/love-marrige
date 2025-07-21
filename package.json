@@ -1,8 +1,17 @@
 {
-  "name": "my-v0-project",
-  "version": "0.1.0",
-  "private": true,
+  "name": "wedding-invitation",
+  "version": "1.0.0",
+  "description": "Свадебное приглашение - Антон и Надежда",
+  "main": "index.html",
   "scripts": {
-    "build": "echo 'no build script'"
+    "dev": "python3 -m http.server 8000",
+    "build": "echo 'Static site - no build required'",
+    "start": "python3 -m http.server 8000"
+  },
+  "keywords": ["wedding", "invitation", "flipbook", "album"],
+  "author": "Антон и Надежда",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
