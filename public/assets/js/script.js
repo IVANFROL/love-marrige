@@ -1,29 +1,48 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', function() {
   // Flipbook logic
   const flipbook = document.getElementById('flipbook');
   if (flipbook) {
-    const pages = Array.from(flipbook.querySelectorAll('.flipbook-page'));
     let currentPage = 0;
+    const pages = document.querySelectorAll('.flipbook-page');
+    const totalPages = pages.length;
 
-    function showPage(index) {
-      pages.forEach((page, i) => {
-        page.classList.toggle('active', i === index);
+    function showPage(pageIndex) {
+      pages.forEach((page, index) => {
+        if (index === pageIndex) {
+          page.classList.add('active');
+        } else {
+          page.classList.remove('active');
+        }
       });
+      // Show/hide navigation buttons
+      const prevBtn = document.querySelector('.flipbook-btn.prev');
+      const nextBtn = document.querySelector('.flipbook-btn.next');
+      if (prevBtn) prevBtn.style.display = pageIndex === 0 ? 'none' : 'block';
+      if (nextBtn) nextBtn.style.display = pageIndex === totalPages - 1 ? 'none' : 'block';
     }
-
-    showPage(currentPage);
 
     const prevBtn = document.querySelector('.flipbook-btn.prev');
     const nextBtn = document.querySelector('.flipbook-btn.next');
-
-    prevBtn.addEventListener('click', () => {
-      currentPage = (currentPage - 1 + pages.length) % pages.length;
-      showPage(currentPage);
-    });
-    nextBtn.addEventListener('click', () => {
-      currentPage = (currentPage + 1) % pages.length;
-      showPage(currentPage);
-    });
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        if (currentPage > 0) {
+          currentPage--;
+          showPage(currentPage);
+        }
+      });
+      prevBtn.addEventListener('touchstart', startMusic, { once: true });
+    }
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        if (currentPage < totalPages - 1) {
+          currentPage++;
+          showPage(currentPage);
+        }
+      });
+      nextBtn.addEventListener('touchstart', startMusic, { once: true });
+    }
+    // Показываем первую страницу
+    showPage(currentPage);
   }
 
   // Wish photo auto-change logic
