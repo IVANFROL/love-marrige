@@ -73,12 +73,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const musicToggle = document.getElementById('music-toggle');
   let musicStarted = false;
 
-  // Set start time to 36 seconds
-  backgroundMusic.currentTime = 36;
+  // Set start time to 36 seconds after audio is loaded
+  backgroundMusic.addEventListener('loadedmetadata', () => {
+    backgroundMusic.currentTime = 36;
+  });
 
   // Start music on first user interaction
   function startMusic() {
     if (!musicStarted) {
+      // Ensure we start from 36 seconds
+      backgroundMusic.currentTime = 36;
       backgroundMusic.play().then(() => {
         musicStarted = true;
         musicToggle.classList.add('playing');
