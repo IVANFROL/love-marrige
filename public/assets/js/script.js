@@ -88,34 +88,30 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log('Audio error:', e);
   });
 
-  // Set start time to 36 seconds after audio is loaded
-  backgroundMusic.addEventListener('loadedmetadata', () => {
-    backgroundMusic.currentTime = 36;
-    console.log('Audio loaded, set time to 36 seconds');
-  });
-
   // Start music on first user interaction
   function startMusic() {
     if (!musicStarted) {
       console.log('Starting music...');
-      // Ensure we start from 36 seconds
-      backgroundMusic.currentTime = 36;
+      
+      // For Safari/iOS, we need to start playing first, then set time
       backgroundMusic.play().then(() => {
+        // Set time to 36 seconds after successful play
+        backgroundMusic.currentTime = 36;
         musicStarted = true;
         musicToggle.classList.add('playing');
         musicToggle.innerHTML = '<i class="fas fa-pause"></i>';
-        console.log('Music started successfully');
+        console.log('Music started successfully at 36 seconds');
       }).catch(err => {
         console.log('Music start failed:', err);
         // Try again with user gesture
         musicToggle.addEventListener('click', () => {
           if (!musicStarted) {
-            backgroundMusic.currentTime = 36;
             backgroundMusic.play().then(() => {
+              backgroundMusic.currentTime = 36;
               musicStarted = true;
               musicToggle.classList.add('playing');
               musicToggle.innerHTML = '<i class="fas fa-pause"></i>';
-              console.log('Music started on button click');
+              console.log('Music started on button click at 36 seconds');
             }).catch(err2 => {
               console.log('Music start failed on button click:', err2);
             });
@@ -147,9 +143,14 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       // Toggle play/pause
       if (backgroundMusic.paused) {
-        backgroundMusic.play();
-        musicToggle.classList.add('playing');
-        musicToggle.innerHTML = '<i class="fas fa-pause"></i>';
+        backgroundMusic.play().then(() => {
+          // Ensure we're at 36 seconds when resuming
+          if (backgroundMusic.currentTime < 36) {
+            backgroundMusic.currentTime = 36;
+          }
+          musicToggle.classList.add('playing');
+          musicToggle.innerHTML = '<i class="fas fa-pause"></i>';
+        });
       } else {
         backgroundMusic.pause();
         musicToggle.classList.remove('playing');
@@ -161,6 +162,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // Loop music when it ends
   backgroundMusic.addEventListener('ended', () => {
     backgroundMusic.currentTime = 36;
-    backgroundMusic.play();
+    backgroundMusic.play().catch(err => {
+      console.log('Loop failed:', err);
+    });
   });
 });
