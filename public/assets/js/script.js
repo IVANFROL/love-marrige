@@ -67,4 +67,60 @@ document.addEventListener("DOMContentLoaded", () => {
   if (wishesPage) {
     wishPageTimer = setInterval(changeWishPageBackground, 3500);
   }
+
+  // Music control logic
+  const backgroundMusic = document.getElementById('background-music');
+  const musicToggle = document.getElementById('music-toggle');
+  let musicStarted = false;
+
+  // Set start time to 36 seconds
+  backgroundMusic.currentTime = 36;
+
+  // Start music on first user interaction
+  function startMusic() {
+    if (!musicStarted) {
+      backgroundMusic.play().then(() => {
+        musicStarted = true;
+        musicToggle.classList.add('playing');
+        musicToggle.innerHTML = '<i class="fas fa-pause"></i>';
+      }).catch(err => {
+        console.log('Music start failed:', err);
+      });
+    }
+  }
+
+  // Listen for first user interaction
+  document.addEventListener('click', startMusic, { once: true });
+  document.addEventListener('touchstart', startMusic, { once: true });
+
+  // Start music when user first interacts with flipbook
+  if (prevBtn) {
+    prevBtn.addEventListener('click', startMusic, { once: true });
+  }
+  if (nextBtn) {
+    nextBtn.addEventListener('click', startMusic, { once: true });
+  }
+
+  musicToggle.addEventListener('click', () => {
+    if (!musicStarted) {
+      startMusic();
+    } else {
+      // Toggle play/pause
+      if (backgroundMusic.paused) {
+        backgroundMusic.play();
+        musicToggle.classList.add('playing');
+        musicToggle.innerHTML = '<i class="fas fa-pause"></i>';
+      } else {
+        backgroundMusic.pause();
+        musicToggle.classList.remove('playing');
+        musicToggle.innerHTML = '<i class="fas fa-music"></i>';
+      }
+    }
+  });
+
+  // Loop music when it ends
+  backgroundMusic.addEventListener('ended', () => {
+    backgroundMusic.currentTime = 36;
+    backgroundMusic.play();
+  });
 });

@@ -9,6 +9,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
+    <audio id="background-music" preload="auto">
+        <source src="assets/Father_John_Misty_-_Real_Love_Baby_72453021.mp3" type="audio/mpeg">
+    </audio>
+    
+    <button id="music-toggle" class="music-btn">
+        <i class="fas fa-music"></i>
+    </button>
+
     <div class="container">
         <div class="flipbook-container">
             <div id="flipbook">
@@ -21,26 +29,37 @@
                     </div>
                   </div>
                 </div>
-                <!-- Страница 2 -->
+                <!-- Страница 2 - Приглашение -->
+                <div class="flipbook-page invitation-page" style="background-image: url('assets/images/invite/telegram-cloud-photo-size-2-5474390729259350883-x.jpg'); background-size: cover; background-position: center;">
+                  <div class="cover-overlay">
+                    <div class="cover-text invitation-text">
+                      <h3>Приглашение</h3>
+                      <p>С большой радостью<br>приглашаем Вас на наше<br>торжество</p>
+                      <p>Мы будем рады разделить с<br>вами этот особенный день</p>
+                    </div>
+                  </div>
+                </div>
+                <!-- Страница 3 - Программа -->
                 <div class="flipbook-page program-page" style="background-image: url('assets/images/invite/telegram-cloud-photo-size-2-5461127307608584171-y.jpg'); background-size: cover; background-position: center;">
                   <div class="cover-overlay">
                     <div class="cover-text program-text">
                       <h3>Программа дня</h3>
                       <ul>
-                        <li><b>14:30</b> — Сбор гостей на регистрацию</li>
-                        <li><b>15:00</b> — Регистрация</li>
-                        <li><b>16:30</b> — Сбор гостей на банкет</li>
-                        <li><b>17:00</b> — Начало банкета</li>
+                        <li><b>14:30</b> — Встреча гостей на регистрацию</li>
+                        <li><b>15:00</b> — Церемония регистрации</li>
+                        <li><b>15:30</b> — Фотосессия и прогулка по саду музея</li>
+                        <li><b>16:30</b> — Сбор гостей на торжественное празднование</li>
+                        <li><b>17:00</b> — Начало торжества</li>
                       </ul>
                       <h4>Места проведения</h4>
-                      <p><b>Регистрация:</b> Государственный музей изобразительных искусств Республики Татарстан</p>
-                      <p>ул. Карла Маркса, 64, Казань</p>
-                      <p><b>Банкет:</b> Веранда Лес</p>
+                      <p><b>Регистрация:</b> Сад Государственного музея изобразительных искусств Республики Татарстан</p>
+                      <p>город Казань, ул. Карла Маркса, 64</p>
+                      <p><b>Торжество:</b> Веранда Лес</p>
                       <p>город Казань, Советский район, М7 817 км</p>
                     </div>
                   </div>
                 </div>
-                <!-- Страница 3 -->
+                <!-- Страница 4 - Пожелания -->
                 <div class="flipbook-page wishes-page" style="background-image: url('assets/images/photos/2025-07-21 17.36.08.jpg'); background-size: cover; background-position: center;">
                   <div class="cover-overlay">
                     <div class="cover-text wishes-text">
