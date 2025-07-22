@@ -73,36 +73,72 @@ document.addEventListener("DOMContentLoaded", () => {
   const musicToggle = document.getElementById('music-toggle');
   let musicStarted = false;
 
+  // Debug audio loading
+  console.log('Audio element found:', !!backgroundMusic);
+  
+  backgroundMusic.addEventListener('loadstart', () => {
+    console.log('Audio load started');
+  });
+  
+  backgroundMusic.addEventListener('canplay', () => {
+    console.log('Audio can play');
+  });
+  
+  backgroundMusic.addEventListener('error', (e) => {
+    console.log('Audio error:', e);
+  });
+
   // Set start time to 36 seconds after audio is loaded
   backgroundMusic.addEventListener('loadedmetadata', () => {
     backgroundMusic.currentTime = 36;
+    console.log('Audio loaded, set time to 36 seconds');
   });
 
   // Start music on first user interaction
   function startMusic() {
     if (!musicStarted) {
+      console.log('Starting music...');
       // Ensure we start from 36 seconds
       backgroundMusic.currentTime = 36;
       backgroundMusic.play().then(() => {
         musicStarted = true;
         musicToggle.classList.add('playing');
         musicToggle.innerHTML = '<i class="fas fa-pause"></i>';
+        console.log('Music started successfully');
       }).catch(err => {
         console.log('Music start failed:', err);
+        // Try again with user gesture
+        musicToggle.addEventListener('click', () => {
+          if (!musicStarted) {
+            backgroundMusic.currentTime = 36;
+            backgroundMusic.play().then(() => {
+              musicStarted = true;
+              musicToggle.classList.add('playing');
+              musicToggle.innerHTML = '<i class="fas fa-pause"></i>';
+              console.log('Music started on button click');
+            }).catch(err2 => {
+              console.log('Music start failed on button click:', err2);
+            });
+          }
+        }, { once: true });
       });
     }
   }
 
-  // Listen for first user interaction
+  // Listen for first user interaction - more events for mobile
   document.addEventListener('click', startMusic, { once: true });
   document.addEventListener('touchstart', startMusic, { once: true });
+  document.addEventListener('touchend', startMusic, { once: true });
+  document.addEventListener('touchmove', startMusic, { once: true });
 
   // Start music when user first interacts with flipbook
   if (prevBtn) {
     prevBtn.addEventListener('click', startMusic, { once: true });
+    prevBtn.addEventListener('touchstart', startMusic, { once: true });
   }
   if (nextBtn) {
     nextBtn.addEventListener('click', startMusic, { once: true });
+    nextBtn.addEventListener('touchstart', startMusic, { once: true });
   }
 
   musicToggle.addEventListener('click', () => {
